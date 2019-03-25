@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./src/store";
 
 import { StyleSheet, View } from "react-native";
 import {
@@ -8,12 +8,12 @@ import {
   createAppContainer,
   createStackNavigator
 } from "react-navigation";
-import WelcomeScreen from "./screens/WelcomeScreen";
-import AuthScreen from "./screens/AuthScreen";
-import MapScreen from "./screens/MapScreen";
-import DeckScreen from "./screens/DeckScreen";
-import ReviewScreen from "./screens/ReviewScreen";
-import SettingScreen from "./screens/SettingScreen";
+import WelcomeScreen from "./src/screens/WelcomeScreen";
+import AuthScreen from "./src/screens/AuthScreen";
+import MapScreen from "./src/screens/MapScreen";
+import DeckScreen from "./src/screens/DeckScreen";
+import ReviewScreen from "./src/screens/ReviewScreen";
+import SettingScreen from "./src/screens/SettingScreen";
 
 const MainNavigator = createBottomTabNavigator({
   welcome: { screen: WelcomeScreen },
