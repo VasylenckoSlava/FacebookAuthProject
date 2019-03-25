@@ -1,4 +1,7 @@
 import React from "react";
+import { Provider } from "react-redux";
+import store from "./store";
+
 import { StyleSheet, View } from "react-native";
 import {
   createBottomTabNavigator,
@@ -32,7 +35,11 @@ const Container = createAppContainer(MainNavigator);
 
 class App extends React.Component {
   render() {
-    return <Container style={styles.container} />;
+    return (
+      <Provider store={store}>
+        <Container style={styles.container} />
+      </Provider>
+    );
   }
 }
 
