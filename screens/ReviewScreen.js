@@ -4,7 +4,6 @@ import { View, Text, Button, Platform } from "react-native";
 
 class ReviewScreen extends Component {
   static navigationOptions = ({ navigation }) => {
-    console.log("navigation", navigation);
     return {
       title: "Review Jobs",
       headerRight: (
