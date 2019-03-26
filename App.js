@@ -15,22 +15,28 @@ import DeckScreen from "./src/screens/DeckScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 
-const MainNavigator = createBottomTabNavigator({
-  welcome: { screen: WelcomeScreen },
-  auth: { screen: AuthScreen },
-  main: {
-    screen: createBottomTabNavigator({
-      map: { screen: MapScreen },
-      deck: { screen: DeckScreen },
-      review: {
-        screen: createStackNavigator({
-          review: { screen: ReviewScreen },
-          settings: { screen: SettingScreen }
-        })
-      }
-    })
+const MainNavigator = createBottomTabNavigator(
+  {
+    welcome: { screen: WelcomeScreen },
+    auth: { screen: AuthScreen },
+    main: {
+      screen: createBottomTabNavigator({
+        map: { screen: MapScreen },
+        deck: { screen: DeckScreen },
+        review: {
+          screen: createStackNavigator({
+            review: { screen: ReviewScreen },
+            settings: { screen: SettingScreen }
+          })
+        }
+      })
+    }
+   },
+  {
+    lazy: true
   }
-});
+);
+
 const Container = createAppContainer(MainNavigator);
 
 class App extends React.Component {
