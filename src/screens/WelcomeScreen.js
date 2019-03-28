@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import _ from "lodash";
+import { AppLoading } from "expo";
+import { View, Text, AsyncStorage } from "react-native";
 import Slides from "../components/Slides";
 
 const SLIDE_DATA = [
@@ -11,10 +13,29 @@ class WelcomeScreen extends Component {
   static navigationOptions = {
     tabBarVisible: false //this will hide the TabBar navigator's header (LoggedIn_TabNavigator)
   };
+  state = { token: null };
+
+  async componentWillMount() {
+    let token = await AsyncStorage.getItem("fb_token");
+    switch (token) {
+      case token:
+        this.props.navigation.navigate("map");
+        this.setState({ token });
+        break;
+      case !token:
+        this.setState({ token: false });
+        break;
+    }
+  }
+
   onSlidesComplete = () => {
     this.props.navigation.navigate("auth");
   };
+
   render() {
+    if (_.isNull(this.state.token)) {
+      return <AppLoading />;
+    }
     return <Slides data={SLIDE_DATA} onComplete={this.onSlidesComplete} />;
   }
 }
