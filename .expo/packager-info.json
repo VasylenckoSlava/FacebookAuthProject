@@ -1,10 +1,10 @@
 {
-  "devToolsPort": 19002,
+  "devToolsPort": 19003,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 19156,
+  "packagerPid": 95890,
   "expoServerNgrokUrl": "https://dj-737.anonymous.facebookauth.exp.direct",
   "packagerNgrokUrl": "https://packager.dj-737.anonymous.facebookauth.exp.direct",
-  "ngrokPid": 19170,
+  "ngrokPid": 95910,
   "webpackServerPort": null
 }
