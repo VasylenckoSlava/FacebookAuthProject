@@ -1,2 +1,2 @@
-export * from './auth_actionType';
-export * from './job_actions';
+export * from '../actions/auth_action';
+export * from '../actions/job_actions';

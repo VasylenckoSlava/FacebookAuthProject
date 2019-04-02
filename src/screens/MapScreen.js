@@ -4,6 +4,7 @@ import { MapView, Constants, Location, Permissions } from "expo";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import { Button } from "react-native-elements";
+import {fetchJobs} from "../actions";
 
 class MapScreen extends Component {
   state = {
@@ -31,11 +32,10 @@ class MapScreen extends Component {
   };
 
   onButtonPress = () => {
-    // console.log('click',this.props.fetchJobs);
-   // console.log(this.state.region)
-     //  console.log(this.props.navigation)
-    this.props.fetchJobs(this.state.region, () => {
-      this.props.navigation.navigate('deck');
+    this.props.getJobs(this.state.region, () => {
+      this.props.navigation.navigate('deck', {
+
+      });
     });
   };
 
@@ -61,6 +61,12 @@ class MapScreen extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getJobs : (region, callback) => dispatch(fetchJobs(region, callback))
+  }
+};
+
 const styles = {
   buttonContainer: {
     position: "absolute",
@@ -71,5 +77,5 @@ const styles = {
 };
 export default connect(
   null,
-  actions
+    mapDispatchToProps
 )(MapScreen);

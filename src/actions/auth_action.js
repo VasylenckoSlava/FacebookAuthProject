@@ -1,5 +1,5 @@
 import { AsyncStorage } from "react-native";
-import * as actionTypes from "./actionTypes";
+import * as actionTypes from "./types";
 import { Facebook } from "expo";
 
 export const facebookLogin = () => async dispatch => {
