@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text,Platform } from "react-native";
 import { connect } from "react-redux";
 import { MapView } from "expo";
 import { Button, Card } from "react-native-elements";
@@ -15,20 +15,20 @@ class DeckScreen extends Component {
       longitudeDelta: 0.02
     };
     return (
-      <Card title={job.title}>
+      <Card title={job.jobtitle}>
         <View style={{ height: 300 }}>
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={PlatformOS === "android"}
+            cacheEnabled={Platform.OS === "android"}
             initialRegion={initialRegion}
           />
         </View>
         <View style={styles.detailWrapper}>
           <Text>{job.company}</Text>
-          <Text>{job.created_at}</Text>
+          <Text>{job.formattedRelativeTime}</Text>
         </View>
-        <Text>{job.description}</Text>
+        <Text>{job.snippet.replace(/<b>/g, '').replace(/<\/b/g, '')}</Text>
       </Card>
     );
   }
@@ -48,6 +48,7 @@ class DeckScreen extends Component {
           data={this.props.jobs}
           renderCard={this.renderCard}
           renderNoMoreCards={this.renderNoMoreCards}
+          keyProp="jobkey"
         />
       </View>
     );

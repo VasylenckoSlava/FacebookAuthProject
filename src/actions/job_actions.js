@@ -1,33 +1,22 @@
 import axios from "axios";
 import reverseGeocode from "latlng-to-zip";
 import qs from "qs";
-import JOB_DATA from '../../IndeedJobData';
+import JOB_DATA from '../../indeedJobData';
 
 import { FETCH_JOBS } from "./types";
-const API_KEY = "AIzaSyBbluF3AeoNU18AKt-QQzbwSxjWMl0PLEI";
-const JOB_ROOT_URL = "https://jobs.github.com/positions.json?";
-// const GEOCODE_ROOT_URL =
-//   "https://maps.googleapis.com/maps/api/directions/json?&key" + API_KEY;
-//const API_GOOGLE_KEY ="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap";
-const JOB_QUERY_PARAMS = {
-  publisher: "4201738803816157",
-  format: "json",
-  v: "2",
-  latlong: 1,
-  radius: 10,
-  q: "React.js,Expo"
+const JOBS_URL = 'https://jobs.github.com/positions.json?';
+const JOB_QUERY_PARAMS= {
+    lat: 37.3229978,
+    long: -122.0321823
 };
 
-const buildJobsUrl = zip => {
-  const query = qs.stringify({
-    ...JOB_QUERY_PARAMS,
-    l: zip,
-      key: API_KEY
-  });
-  return `${JOB_ROOT_URL}${query}`;
+const buildJobsUrl = (region)=>{
+    const query = qs.stringify({...JOB_QUERY_PARAMS, lat: region.latitude, long: region.longitude});
+    console.log(query);
+    return `${JOBS_URL}${query}`;
 };
 
-export const fetchJobs = (region, callback) => async dispatch => {
+export const fetchJobs = (region, callback)=> async (dispatch) => {
     try {
         const data = JOB_DATA;
         console.log(data);
@@ -36,8 +25,8 @@ export const fetchJobs = (region, callback) => async dispatch => {
     } catch (e) {
         console.log(e);
     }
-
 };
+
 
 // import axios from "axios";
 // //import reverseGeocode from 'latlng-to-zip';
