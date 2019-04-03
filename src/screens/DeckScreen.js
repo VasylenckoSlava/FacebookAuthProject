@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { View, Text,Platform } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { connect } from "react-redux";
 import { MapView } from "expo";
 import { Button, Card } from "react-native-elements";
 import Swipe from "../components/Swipe";
-import * as actions from "../actions";
+// import * as actions from "../actions";
+import { likedJobs } from "../actions";
 
 class DeckScreen extends Component {
   renderCard(job) {
@@ -28,7 +29,7 @@ class DeckScreen extends Component {
           <Text>{job.company}</Text>
           <Text>{job.formattedRelativeTime}</Text>
         </View>
-        <Text>{job.snippet.replace(/<b>/g, '').replace(/<\/b/g, '')}</Text>
+        <Text>{job.snippet.replace(/<b>/g, "").replace(/<\/b/g, "")}</Text>
       </Card>
     );
   }
@@ -36,19 +37,24 @@ class DeckScreen extends Component {
   renderNoMoreCards = () => {
     return (
       <Card title="No more jobs">
-        <Button title="Back to map" onPress={() => {}} />
+        <Button
+          title="Back to map"
+          onPress={() => this.props.navigation.navigate("map")}
+        />
       </Card>
     );
   };
   render() {
     console.log("DeckScreen", this.props);
     return (
-      <View>
+      <View style={{ marginTop: 30 }}>
         <Swipe
           data={this.props.jobs}
           renderCard={this.renderCard}
           renderNoMoreCards={this.renderNoMoreCards}
+          onSwipeRight={job => this.props.likedJobs(job)}
           keyProp="jobkey"
+          navigation={this.props.navigation}
         />
       </View>
     );
@@ -63,10 +69,19 @@ const styles = {
   }
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    likedJobs: job => dispatch(likedJobs(job))
+  };
+};
+
 const mapStateToProps = ({ jobs }) => {
   return {
     jobs: jobs.results
   };
 };
 
-export default connect(mapStateToProps, actions)(DeckScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeckScreen);

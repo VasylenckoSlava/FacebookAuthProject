@@ -7,8 +7,8 @@ const SWIPE_OUT_DURATION = 250;
 
 class Swipe extends Component {
     static defaultProps = {
-        onSwipeRight: () => {},
-        onSwipeLeft: () => {},
+        onSwipeRight: (item) => {},
+        onSwipeLeft: (item) => {},
         keyProp: 'id'
     };
 
@@ -92,8 +92,7 @@ class Swipe extends Component {
         if ( this.state.index >= this.props.data.length ) {
             return this.props.renderNoMoreCards();
         }
-        return this.props.data
-            .map((item, i) => {
+        return this.props.data.map((item, i) => {
                 if (i < this.state.index) {
                     return null;
                 }
