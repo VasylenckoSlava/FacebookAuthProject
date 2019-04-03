@@ -3,7 +3,7 @@ import reverseGeocode from "latlng-to-zip";
 import qs from "qs";
 import JOB_DATA from '../../indeedJobData';
 
-import { FETCH_JOBS, LIKE_JOB } from "./types";
+import {CLEAR_LIKED_JOB, FETCH_JOBS, LIKE_JOB} from "./types";
 
 const JOBS_URL = 'https://jobs.github.com/positions.json?';
 const JOB_QUERY_PARAMS= {
@@ -32,7 +32,14 @@ export const likedJobs = (job) => {
       payload: job,
       type: LIKE_JOB
     }
-}
+};
+
+export const clearLikedJobs = () => {
+    return {
+        type: CLEAR_LIKED_JOB
+    }
+};
+
 
 
 

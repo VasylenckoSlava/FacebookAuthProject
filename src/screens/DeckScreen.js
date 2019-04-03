@@ -40,12 +40,12 @@ class DeckScreen extends Component {
         <Button
           title="Back to map"
           onPress={() => this.props.navigation.navigate("map")}
+          icon={{ name: "my-location" }}
         />
       </Card>
     );
   };
   render() {
-    console.log("DeckScreen", this.props);
     return (
       <View style={{ marginTop: 30 }}>
         <Swipe
