@@ -43,6 +43,7 @@ const MainStackNavigator = createStackNavigator(
           }
         },
         {
+          tabBarPosition:'bottom',
           tabBarOptions: {
             labelStyle: { fontSize: 12 }
           }
