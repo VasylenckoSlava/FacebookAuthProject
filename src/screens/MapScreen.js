@@ -3,10 +3,17 @@ import { View, Text, Platform, ActivityIndicator } from "react-native";
 import { MapView, Constants, Location, Permissions } from "expo";
 import { connect } from "react-redux";
 import * as actions from "../actions";
-import { Button } from "react-native-elements";
-import {fetchJobs} from "../actions";
+import { Button, Icon } from "react-native-elements";
+import { fetchJobs } from "../actions";
 
 class MapScreen extends Component {
+  static navigationOptions = {
+    title: "Map",
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="my-location" size={30} color={tintColor} />
+    )
+  };
+
   state = {
     region: {
       latitude: 37.78825,
@@ -17,13 +24,11 @@ class MapScreen extends Component {
     mapLoaded: false
   };
 
-
   componentDidMount() {
     this.setState({
       mapLoaded: true
     });
   }
-
 
   onRegionChangeComplete = region => {
     this.setState({
@@ -33,9 +38,7 @@ class MapScreen extends Component {
 
   onButtonPress = () => {
     this.props.getJobs(this.state.region, () => {
-      this.props.navigation.navigate('deck', {
-
-      });
+      this.props.navigation.navigate("deck", {});
     });
   };
 
@@ -61,10 +64,10 @@ class MapScreen extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getJobs : (region, callback) => dispatch(fetchJobs(region, callback))
-  }
+    getJobs: (region, callback) => dispatch(fetchJobs(region, callback))
+  };
 };
 
 const styles = {
@@ -77,5 +80,5 @@ const styles = {
 };
 export default connect(
   null,
-    mapDispatchToProps
+  mapDispatchToProps
 )(MapScreen);

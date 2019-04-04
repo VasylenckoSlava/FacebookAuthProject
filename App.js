@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import store from "./src/store";
 
-import { StyleSheet, View } from "react-native";
+import { Button, Platform, StyleSheet, View } from "react-native";
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -14,12 +14,13 @@ import MapScreen from "./src/screens/MapScreen";
 import DeckScreen from "./src/screens/DeckScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import SettingScreen from "./src/screens/SettingScreen";
+import { Icon } from "react-native-elements";
 
-
-const  MainStackNavigator = createStackNavigator({
-  welcome: { screen: WelcomeScreen },
-  auth: { screen: AuthScreen },
-  main: {
+const MainStackNavigator = createStackNavigator(
+  {
+    welcome: { screen: WelcomeScreen },
+    auth: { screen: AuthScreen },
+    main: {
       screen: createBottomTabNavigator({
         map: { screen: MapScreen },
         deck: { screen: DeckScreen },
@@ -31,9 +32,12 @@ const  MainStackNavigator = createStackNavigator({
         }
       })
     }
-}, {
-  headerMode: 'none'
-});
+  },
+  {
+    headerMode: "none"
+  }
+);
+
 
 const Container = createAppContainer(MainStackNavigator);
 
