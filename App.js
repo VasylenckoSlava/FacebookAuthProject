@@ -1,8 +1,10 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from 'redux-persist/integration/react'
 import store from "./src/store";
 
-import { Button, Platform, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -43,7 +45,7 @@ const MainStackNavigator = createStackNavigator(
           }
         },
         {
-          tabBarPosition:'bottom',
+          tabBarPosition: "bottom",
           tabBarOptions: {
             labelStyle: { fontSize: 12 }
           }
@@ -60,9 +62,12 @@ const Container = createAppContainer(MainStackNavigator);
 
 class App extends React.Component {
   render() {
+    const persistor = persistStore(store);
     return (
       <Provider store={store}>
-        <Container style={styles.container} />
+        <PersistGate persistor={persistor}>
+          <Container style={styles.container} />
+        </PersistGate>
       </Provider>
     );
   }
