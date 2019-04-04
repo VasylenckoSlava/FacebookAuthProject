@@ -14,10 +14,6 @@ import { MapView } from "expo";
 class ReviewScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Review Jobs",
-      tabBarIcon: ({ tintColor }) => {
-        return <Icon name="heart" size={30} color={tintColor} />;
-      },
       headerRight: (
         <Button
           title="Settings"

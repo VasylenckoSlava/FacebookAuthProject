@@ -21,23 +21,39 @@ const MainStackNavigator = createStackNavigator(
     welcome: { screen: WelcomeScreen },
     auth: { screen: AuthScreen },
     main: {
-      screen: createBottomTabNavigator({
-        map: { screen: MapScreen },
-        deck: { screen: DeckScreen },
-        review: {
-          screen: createStackNavigator({
-            review: { screen: ReviewScreen },
-            settings: { screen: SettingScreen }
-          })
+      screen: createBottomTabNavigator(
+        {
+          map: { screen: MapScreen },
+          deck: { screen: DeckScreen },
+          review: {
+            screen: createStackNavigator(
+              {
+                review: { screen: ReviewScreen },
+                settings: { screen: SettingScreen }
+              },
+              {
+                navigationOptions: ({ navigation }) => ({
+                  title: "Review Jobs",
+                  tabBarIcon: ({ tintColor }) => (
+                    <Icon name="favorite" size={30} color={tintColor} />
+                  )
+                })
+              }
+            )
+          }
+        },
+        {
+          tabBarOptions: {
+            labelStyle: { fontSize: 12 }
+          }
         }
-      })
+      )
     }
   },
   {
     headerMode: "none"
   }
 );
-
 
 const Container = createAppContainer(MainStackNavigator);
 
