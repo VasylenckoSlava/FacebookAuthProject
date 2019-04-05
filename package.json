@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "expo": "^32.0.0",
     "latlng-to-zip": "^0.0.1",
     "lodash": "^4.17.11",
     "qs": "^6.7.0",
@@ -23,7 +22,8 @@
     "uglify-es": "3.2.2"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "expo": "^32.0.6"
   },
   "private": true
 }

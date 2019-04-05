@@ -1,15 +1,16 @@
 import React from "react";
+import { Notifications } from "expo";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from "redux-persist/integration/react";
 import store from "./src/store";
-
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import {
   createBottomTabNavigator,
   createAppContainer,
   createStackNavigator
 } from "react-navigation";
+import registerForNotifications from "./src/services/pushNotifications";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import AuthScreen from "./src/screens/AuthScreen";
 import MapScreen from "./src/screens/MapScreen";
@@ -61,6 +62,16 @@ const MainStackNavigator = createStackNavigator(
 const Container = createAppContainer(MainStackNavigator);
 
 class App extends React.Component {
+  componentDidMount() {
+    registerForNotifications();
+    Notifications.addListener(notification => {
+      const {data: { text },origin} = notification;
+
+      if (origin === "received" && text) {
+        Alert.alert("New Push Notification", text, [{ text: "Ok." }]);
+      }
+    });
+  }
   render() {
     const persistor = persistStore(store);
     return (
