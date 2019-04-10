@@ -7,7 +7,7 @@ export default function(state = [], action) {
     // case REHYDRATE:
     //   return action.payload.likedJobs || [];
     case LIKE_JOB:
-      return _.uniqBy([action.payload, ...state], "jobkey");
+        return _.uniqBy([action.payload, ...state], "jobkey");
     case CLEAR_LIKED_JOB:
       return [];
     default:

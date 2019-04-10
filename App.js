@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import store from "./src/store";
-import { StyleSheet, Alert } from "react-native";
+import { StyleSheet, Easing, Animated } from "react-native";
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -18,8 +18,10 @@ import DeckScreen from "./src/screens/DeckScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { Icon } from "react-native-elements";
+import ModalScreen from "./src/screens/ModalScreen";
 
-const MainStackNavigator = createStackNavigator(
+
+const RootStack = createStackNavigator(
   {
     welcome: { screen: WelcomeScreen },
     auth: { screen: AuthScreen },
@@ -32,7 +34,7 @@ const MainStackNavigator = createStackNavigator(
             screen: createStackNavigator(
               {
                 review: { screen: ReviewScreen },
-                settings: { screen: SettingScreen }
+                settings: { screen: SettingScreen },
               },
               {
                 navigationOptions: ({ navigation }) => ({
@@ -59,19 +61,50 @@ const MainStackNavigator = createStackNavigator(
   }
 );
 
+const MainStackNavigator = createStackNavigator(
+    {
+        Main: {
+            screen: RootStack,
+        },
+        MyModal: {
+            screen: ModalScreen,
+        },
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+        transparentCard: true,
+        transitionConfig: () => ({
+            transitionSpec: {
+                duration: 750,
+                easing: Easing.out(Easing.poly(4)),
+                timing: Animated.timing,
+                useNativeDriver: true,
+            },
+            screenInterpolator: sceneProps => {
+                const { layout, position, scene } = sceneProps;
+                const thisSceneIndex = scene.index;
+
+                const height = layout.initHeight;
+                const translateY = position.interpolate({
+                    inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+                    outputRange: [height, 0, 0],
+                });
+                const opacity = position.interpolate({
+                    inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+                    outputRange: [1, 1, 0.5],
+                });
+
+                return { opacity,transform: [{ translateY }] };
+            },
+        })
+    }
+);
+
 const Container = createAppContainer(MainStackNavigator);
 
 class App extends React.Component {
-  componentDidMount() {
-    registerForNotifications();
-    Notifications.addListener(notification => {
-      const {data: { text },origin} = notification;
 
-      if (origin === "received" && text) {
-        Alert.alert("New Push Notification", text, [{ text: "Ok." }]);
-      }
-    });
-  }
   render() {
     const persistor = persistStore(store);
     return (

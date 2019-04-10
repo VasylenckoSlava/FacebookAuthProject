@@ -8,7 +8,7 @@ import {
   Linking
 } from "react-native";
 import { connect } from "react-redux";
-import { Card, Icon } from "react-native-elements";
+import { Card} from "react-native-elements";
 import { MapView } from "expo";
 
 class ReviewScreen extends Component {
@@ -30,7 +30,7 @@ class ReviewScreen extends Component {
 
   renderLikedJobs() {
     const { likedJobs } = this.props;
-    if (likedJobs) {
+      if (likedJobs) {
       return likedJobs.map(job => {
         const {
           company,
@@ -73,7 +73,6 @@ class ReviewScreen extends Component {
   }
 
   render() {
-    console.log("this.props.likedJobs", this.props);
     return <ScrollView>{this.renderLikedJobs()}</ScrollView>;
   }
 }
@@ -91,7 +90,8 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  return {
+    console.log('bla state', state);
+    return {
     likedJobs: state.likedJobs
   };
 };
