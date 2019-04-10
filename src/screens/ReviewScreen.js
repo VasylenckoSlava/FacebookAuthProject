@@ -12,22 +12,6 @@ import { Card} from "react-native-elements";
 import { MapView } from "expo";
 
 class ReviewScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerRight: (
-        <Button
-          title="Settings"
-          onPress={() => navigation.navigate("settings")}
-          backgroundColor="rgba(0,0,0,0)"
-          color="rgba(0, 122,255,1)"
-        />
-      ),
-      style: {
-        marginTop: Platform.OS === "android" ? 24 : 0
-      }
-    };
-  };
-
   renderLikedJobs() {
     const { likedJobs } = this.props;
       if (likedJobs) {

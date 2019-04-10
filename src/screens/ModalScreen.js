@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, View, Text } from "react-native";
 import { connect } from "react-redux";
-import * as actions from "../actions";
 import { clearLikedJobs } from "../actions";
 
 class ModalScreen extends Component {
@@ -11,7 +10,6 @@ class ModalScreen extends Component {
   };
   render() {
     const { navigate } = this.props.navigation;
-    console.log("navigate", this.props.navigation);
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <View

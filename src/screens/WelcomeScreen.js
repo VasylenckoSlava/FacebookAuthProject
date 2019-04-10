@@ -10,9 +10,6 @@ const SLIDE_DATA = [
   { text: "Set your location,then swipe away", color: "#03A9F4" }
 ];
 class WelcomeScreen extends Component {
-  static navigationOptions = {
-    tabBarVisible: false //this will hide the TabBar navigator's header (LoggedIn_TabNavigator)
-  };
   state = { token: null };
 
   async componentWillMount() {

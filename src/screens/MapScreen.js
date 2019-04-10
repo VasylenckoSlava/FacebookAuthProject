@@ -8,10 +8,7 @@ import { fetchJobs } from "../actions";
 
 class MapScreen extends Component {
   static navigationOptions = {
-    title: "Map",
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="my-location" size={30} color={tintColor} />
-    )
+
   };
 
   state = {

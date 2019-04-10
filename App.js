@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import store from "./src/store";
-import { StyleSheet, Easing, Animated } from "react-native";
+import { StyleSheet, Easing, Animated, Button, Platform } from "react-native";
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -20,7 +20,6 @@ import SettingScreen from "./src/screens/SettingScreen";
 import { Icon } from "react-native-elements";
 import ModalScreen from "./src/screens/ModalScreen";
 
-
 const RootStack = createStackNavigator(
   {
     welcome: { screen: WelcomeScreen },
@@ -34,15 +33,15 @@ const RootStack = createStackNavigator(
             screen: createStackNavigator(
               {
                 review: { screen: ReviewScreen },
-                settings: { screen: SettingScreen },
+                settings: { screen: SettingScreen }
               },
               {
-                navigationOptions: ({ navigation }) => ({
+                navigationOptions: {
                   title: "Review Jobs",
                   tabBarIcon: ({ tintColor }) => (
                     <Icon name="favorite" size={30} color={tintColor} />
                   )
-                })
+                }
               }
             )
           }
@@ -61,50 +60,90 @@ const RootStack = createStackNavigator(
   }
 );
 
-const MainStackNavigator = createStackNavigator(
-    {
-        Main: {
-            screen: RootStack,
-        },
-        MyModal: {
-            screen: ModalScreen,
-        },
-    },
-    {
-        mode: 'modal',
-        headerMode: 'none',
-        transparentCard: true,
-        transitionConfig: () => ({
-            transitionSpec: {
-                duration: 750,
-                easing: Easing.out(Easing.poly(4)),
-                timing: Animated.timing,
-                useNativeDriver: true,
-            },
-            screenInterpolator: sceneProps => {
-                const { layout, position, scene } = sceneProps;
-                const thisSceneIndex = scene.index;
+WelcomeScreen.navigationOptions = {
+  tabBarVisible: false //this will hide the TabBar navigator's header (LoggedIn_TabNavigator)
+};
 
-                const height = layout.initHeight;
-                const translateY = position.interpolate({
-                    inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-                    outputRange: [height, 0, 0],
-                });
-                const opacity = position.interpolate({
-                    inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-                    outputRange: [1, 1, 0.5],
-                });
+MapScreen.navigationOptions = {
+  title: "Map",
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="my-location" size={30} color={tintColor} />
+  )
+};
 
-                return { opacity,transform: [{ translateY }] };
-            },
-        })
+DeckScreen.navigationOptions = {
+  title: "Deck",
+  tabBarIcon: ({ tintColor }) => (
+    <Icon name="description" size={30} color={tintColor} />
+  )
+};
+
+ReviewScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: (
+      <Button
+        title="Settings"
+        onPress={() => navigation.navigate("settings")}
+        backgroundColor="rgba(0,0,0,0)"
+        color="rgba(0, 122,255,1)"
+      />
+    ),
+
+    style: {
+      marginTop: Platform.OS === "android" ? 24 : 0
     }
+  };
+};
+
+SettingScreen.navigationOptions = {
+  headerStyle: {
+    marginTop: Platform.OS === "android" ? 24 : 0
+  }
+};
+
+const MainStackNavigator = createStackNavigator(
+  {
+    Main: {
+      screen: RootStack
+    },
+    MyModal: {
+      screen: ModalScreen
+    }
+  },
+  {
+    mode: "modal",
+    headerMode: "none",
+    transparentCard: true,
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 750,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+        useNativeDriver: true
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const thisSceneIndex = scene.index;
+
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+          outputRange: [height, 0, 0]
+        });
+        const opacity = position.interpolate({
+          inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+          outputRange: [1, 1, 0.5]
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      }
+    })
+  }
 );
 
 const Container = createAppContainer(MainStackNavigator);
 
 class App extends React.Component {
-
   render() {
     const persistor = persistStore(store);
     return (
