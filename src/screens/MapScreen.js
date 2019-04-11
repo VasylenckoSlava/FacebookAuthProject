@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, Platform, ActivityIndicator } from "react-native";
-import { MapView, Constants, Location, Permissions } from "expo";
+import { View} from "react-native";
+import { MapView } from "expo";
 import { connect } from "react-redux";
-import * as actions from "../actions";
-import { Button, Icon } from "react-native-elements";
+import { Button } from "react-native-elements";
 import { fetchJobs } from "../actions";
 
 class MapScreen extends Component {
